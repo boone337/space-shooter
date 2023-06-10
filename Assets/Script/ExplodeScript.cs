@@ -22,7 +22,7 @@ public class ExplodeScript : MonoBehaviour
         //_asteroid = GameObject.Find("Asteroid").GetComponent < Asteroid>();
 
 
-        Destroy(this.gameObject, 3f);
+        Destroy(this.gameObject, 8f);
 
     }
 

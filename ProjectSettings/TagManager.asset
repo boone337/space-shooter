@@ -11,6 +11,9 @@ TagManager:
   - lazer
   - Triple Shot
   - tripleShotPowerUpPrefab
+  - enemy laser
+  - EnemyShield
+  - power up
   layers:
   - Default
   - TransparentFX
@@ -21,8 +24,8 @@ TagManager:
   - 
   - 
   - Post Processing
-  - 
-  - 
+  - Player
+  - LaserLayer
   - 
   - 
   - 

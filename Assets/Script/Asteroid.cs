@@ -10,7 +10,7 @@ public class Asteroid : MonoBehaviour
     //private GameObject _Asteroid;
 
     [SerializeField]
-    private GameObject _ExplosionPrefab;
+    private GameObject _explosion_prefab;
 
     [SerializeField]
     private GameObject _model;
@@ -30,14 +30,18 @@ public class Asteroid : MonoBehaviour
     [SerializeField]
     private bool _isStarterAsteroid = false;
 
+    [SerializeField]
+    private AudioSource _audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
-
-
+        _anim = GetComponent<Animator>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
 
         _player = GameObject.Find("Player").GetComponent<Player>();
+
+        _audioSource = GetComponent<AudioSource>(); 
     }
 
     // Update is called once per frame
@@ -66,24 +70,22 @@ public class Asteroid : MonoBehaviour
         }
 
 
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            boom();
+            Debug.Log("Destroyed by Nuke!");
+        }
+
         //transform.position = new Vector3(Random.Range(-8f, 8f),7, 0);
 
-        // Destroy (this.gameObject);
+            // Destroy (this.gameObject);
 
 
-        //transform.Translate(Vector3.down * _speed * Time.deltaTime);
-        //
-        //transform.Rotate(Vector3.down * _speed * Time.deltaTime);
-
-
-
-
+            //transform.Translate(Vector3.down * _speed * Time.deltaTime);
+            //
+            //transform.Rotate(Vector3.down * _speed * Time.deltaTime);
 
     }
-
-
-
-
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -91,7 +93,7 @@ public class Asteroid : MonoBehaviour
         if (other.tag == "laser")
         {
             Debug.Log("Laser hit Asteroid");
-            Instantiate(_ExplosionPrefab, transform.position, Quaternion.identity);
+            
             Destroy(other.gameObject);
             if (_isStarterAsteroid == true)
 
@@ -99,44 +101,51 @@ public class Asteroid : MonoBehaviour
                 _spawnManager.StartSpawning();
 
             }
-
-            Destroy(GetComponent<Collider2D>());
-            Destroy(this.gameObject, 0.3f);
-
-
+            Instantiate(_explosion_prefab, transform.position, Quaternion.identity);
+            // Destroy(GetComponent<Collider2D>());
+            _anim.SetTrigger("On Enemy Death");
+            _speed = 0;
+            Destroy(this.gameObject, 1f);
+          
         }
-
 
         if (other.tag == "Player")
         {
             Player player = other.transform.GetComponent<Player>();
             Debug.Log("player hit asteroid");
-            Instantiate(_ExplosionPrefab, transform.position, Quaternion.identity);
+            
             //Destroy(_player);
             if (_player != null)
             {
                 _player.Damage();
 
             }
-
+            Instantiate(_explosion_prefab, transform.position, Quaternion.identity);
+            _anim.SetTrigger("On Enemy Death");
             _speed = 0;
-            Destroy(this.gameObject, 0.5f);
-
-
-
-
+           
+            Destroy(this.gameObject, 1f);
+            _speed = 0;
+ 
         }
 
-
-
-
-
-
-
+        //trying to implement bomb damage through player instead of bombscript
 
     }
 
+    void boom()
+    {
+        //if (Input.GetKeyDown(KeyCode.B))
 
+
+        Instantiate(_explosion_prefab, transform.position, Quaternion.identity);
+        _anim.SetTrigger("On Enemy Death");
+        _speed = 0;
+
+        Destroy(this.gameObject, 1f);
+        _speed = 0;
+
+    }
 
 
 
@@ -161,5 +170,5 @@ public class Asteroid : MonoBehaviour
 
 }
 
-    
+
 
