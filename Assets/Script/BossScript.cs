@@ -35,7 +35,7 @@ public class BossScript : MonoBehaviour
 
     private Vector3 center;        // Center of the circle
 
-    private float angle = 0f;      // Current angle of rotation
+ //   private float angle = 0f;      // Current angle of rotation
 
     [SerializeField]
     private bool _move = true;
@@ -171,28 +171,6 @@ public class BossScript : MonoBehaviour
 
     }
 
-    void Bomb()      //trying to implement bomb damage through player instead of bombscript
-    {
-
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            StartCoroutine(Damage());
-
-        }
-
-        IEnumerator Damage()
-        {
-
-            yield return new WaitForSeconds(.5f);
-            _anim.SetTrigger("On Bomb Death");
-            _audioSource.Play();
-            _bossLife -= 25;
-            _player.AddScore(100);
-            // Destroy(this.gameObject);
-
-        }
-
-    }
 
     void CalculateMovement()
     {
@@ -280,7 +258,7 @@ public class BossScript : MonoBehaviour
  
         else if (other.tag == "enemy laser")
         {
-            Debug.Log("no damage no emotional damage");
+            Debug.Log("no damage no damage");
         }
 
         IEnumerator ChangeColorForOneSecond()

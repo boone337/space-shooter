@@ -16,8 +16,7 @@ GameObject:
   - component: {fileID: 6148321917836455851}
   - component: {fileID: 6148321917836455845}
   - component: {fileID: 6148321917836455844}
-  - component: {fileID: 6148321917836455846}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -33,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 6148321917836455853}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.35, y: -7.53, z: 0}
-  m_LocalScale: {x: 0.5447838, y: 0.6308357, z: 0.5}
+  m_LocalScale: {x: 0.7280095, y: 0.848546, z: 0.5}
   m_Children:
   - {fileID: 6148321919728390783}
   - {fileID: 6148321918913811838}
@@ -80,7 +79,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2113713629
   m_SortingLayer: 1
-  m_SortingOrder: 4
+  m_SortingOrder: 8
   m_Sprite: {fileID: 21300000, guid: 1b4a8fdd39d3a45d0a9ee484ad6800ec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -110,12 +109,11 @@ MonoBehaviour:
   _laserPrefab: {fileID: 3669494980250422182, guid: 638f2c4aa99bcd145abcf9b0f9cfe069,
     type: 3}
   _laser: 1
-  _lives: 1
+  _lives: 3
   _oneUP: 1
   _isTripleShotActive: 0
   _TripleShotPrefab: {fileID: 2970819948940621451, guid: ea085eadb15260546afc842e6423bcd9,
     type: 3}
-  _speedBoostActive: 0
   _speedMultiplier: 2
   _isShieldActive: 0
   _shieldPower: 3
@@ -124,7 +122,7 @@ MonoBehaviour:
   _score: 0
   _left_Engine: {fileID: 4183445199768932016}
   _right_Engine: {fileID: 5536233234720696191}
-  _laserSoundClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
+  _laserSoundClip: {fileID: 0}
   _explosionSoundClip: {fileID: 0}
   _audioSource: {fileID: 0}
   _ammoSupply: 15
@@ -135,6 +133,9 @@ MonoBehaviour:
   _thrusterSpeed: 3
   _thrusterLevel: 100
   _speed: 6
+  _homingMissile: {fileID: 8731491524095829752, guid: bf6f64053ff607044be89fd97287ca33,
+    type: 3}
+  _homingActive: 0
 --- !u!61 &6148321917836455849
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -192,7 +193,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.565
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -310,23 +311,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 0}
-  shakeDuration: 0.1
-  _shakeAmount: 0.1
---- !u!114 &6148321917836455846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6148321917836455853}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: faa192e6d2cb0ad4cba9b47967e61243, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cameraTransform: {fileID: 6148321917836455848}
-  shakeDuration: 2
-  _shakeAmount: 0.7
+  shakeDuration: 1.5
+  _shakeAmount: 2.7
 --- !u!1 &6148321918913811837
 GameObject:
   m_ObjectHideFlags: 0

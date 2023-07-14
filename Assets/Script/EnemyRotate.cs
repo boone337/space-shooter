@@ -8,8 +8,7 @@ using UnityEngine.UIElements;
 public class EnemyRotate : MonoBehaviour
 {
    
-    [SerializeField]
-    private Transform Target;  // rotate to target
+    
 
 
     [SerializeField]

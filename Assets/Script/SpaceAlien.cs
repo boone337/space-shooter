@@ -1,6 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
+using TMPro.EditorUtilities;
+using UnityEditorInternal;
+using UnityEditor;
+using UnityEngine.UI;
 
 public class SpaceAlien : MonoBehaviour
 {
@@ -50,15 +55,6 @@ public class SpaceAlien : MonoBehaviour
             Debug.LogError("Animator is Null");
         }
 
-        // _bomb = GameObject.Find("BombScript").GetCoomponent<BombScript>();
-        //      if (_bomb == null)
-        // {
-        //     Debug.LogError("Bomb is Null");
-        //
-        // }                Why am i getting a object reference error code ???
-
-
-
     }
 
 
@@ -67,7 +63,7 @@ public class SpaceAlien : MonoBehaviour
     {
         CalculateMovement();
 
-        if (Time.time > _canFire)
+       if (Time.time > _canFire)
         {
             _fireRate = Random.Range(3f, 5F);
             _canFire = Time.time + _fireRate;
@@ -78,8 +74,7 @@ public class SpaceAlien : MonoBehaviour
              CreateBullet(-115f);
             CreateBullet(- 140f);
         }
-
-        Bomb();
+   
        
     }
 
@@ -93,29 +88,6 @@ public class SpaceAlien : MonoBehaviour
        
     }
 
-
-    void Bomb()      //trying to implement bomb damage through player instead of bombscript
-    {
-
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            StartCoroutine(Damage());
-
-        }
-
-        IEnumerator Damage()
-        {
-
-            yield return new WaitForSeconds(.5f);
-
-            Destroy(this.gameObject);
-            _anim.SetTrigger("On Bomb Death");
-            _audioSource.Play();
-            // Destroy(this.gameObject);
-
-        }
-
-    }
 
     void CalculateMovement()
     {

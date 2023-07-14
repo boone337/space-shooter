@@ -20,8 +20,6 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField] private GameObject _enemyPrefab3;
 
-    [SerializeField] private GameObject _enemyPrefab4;
-
     [SerializeField] private GameObject _bossPrefab;
 
     //  [SerializeField] private float _spawnTime = 6f;
@@ -35,11 +33,14 @@ public class SpawnManager : MonoBehaviour
 
     private bool _stopSpawning = false;
 
-    [SerializeField]
-    private GameObject[] _powerups;
+    
 
     [SerializeField]
-    private GameObject _asteroidPrefab;
+    private GameObject  _asteroidPrefab;
+
+    [SerializeField]
+    private int randomAsteroidID; 
+
 
     private UIScript _uIScript;
 
@@ -49,9 +50,9 @@ public class SpawnManager : MonoBehaviour
 
 
     //most frequent down to rarity
-    public int total ;   //can be total weight or whatever you choose to call it
+    public int total;   //can be total weight or whatever you choose to call it
 
-    public int RandomNumber;  
+    public int RandomNumber;
 
     public int[] table = //{ 60, 30, 10 }; or can do as shown below
     {
@@ -69,11 +70,8 @@ public class SpawnManager : MonoBehaviour
 
         _player = GameObject.Find("Player").GetComponent<Player>();
 
-        Vector3 posToSpawn = new Vector3(0, 16f, 0);
+       // Vector3 posToSpawn = new Vector3(0, 16f, 0);
 
-       
-
-        // GameObject newEnemy2 = Instantiate(_bossPrefab, posToSpawn, Quaternion.identity);
     }
 
     public void StartSpawning()
@@ -88,30 +86,31 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(EnemyWave());
 
         _uIScript.UpdateChangeWaveCount(_waveNumber);
-       
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        WeightPowerUp();
+       // WeightPowerUp();
 
     }
-    //Spawn game objects every 5 seconds
-    //Create a coroutine of type IEnumerator -- Yield Events
-    // while loops
+
+  
     public IEnumerator EnemyWave()
     {
+        Debug.Log("enemy wave started");
         while (_startWave == true)  //or could have used _stopSpawning == false
         {
 
             Vector3 posToSpawn = new Vector3(Random.Range(-10f, 10f), 12f, 0);
 
-            GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);  //for demonstration purposes and project tasks I have an enemy spawnroutine and also instantiating enemies in wave routine.  
+            GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
 
-            GameObject newEnemy1 = Instantiate(_enemyPrefab2, posToSpawn, Quaternion.identity);  //ultimately I can put all the spawning here in the wave routine. 
+            Debug.Log(" EnemyPrefabSpawned");
+           // GameObject newEnemy1 = Instantiate(_enemyPrefab2, posToSpawn, Quaternion.identity);  
 
-            newEnemy1.transform.parent = _enemyContainer.transform;
+            newEnemy.transform.parent = _enemyContainer.transform;
 
             yield return new WaitForSeconds(5F);   //(5f / 1.5f);
             // _spawnTime /= 1.5f;  I can add this in yield time under _spawntime 
@@ -120,18 +119,20 @@ public class SpawnManager : MonoBehaviour
 
             _uIScript.UpdateChangeWaveCount(_waveNumber);
 
-            
 
-            if (_waveNumber == 5 ) 
-            {    
-                _startWave = false;
-                _stopSpawning = true;
-            }
 
-            if (_stopSpawning == true && _player != null)
+            if (_waveNumber == 8)
             {
                 _startWave = false;
+                _stopSpawning = true;
 
+
+            }
+
+            if (_waveNumber == 8  && _player != null)  //previously had if stopSpawning is true and player != null instantiate boss 
+            {
+                _startWave = false;                // lets see if this will stop boss from spawning 2x..it did so it was spawning boss as soon as stop spawning = true
+                                                    //which was the case when the player dies and it spawned boss  (problem fixed 7.2.23)
                 Boss();
 
                 _uIScript._bossLifeBar.enabled = true;
@@ -140,35 +141,59 @@ public class SpawnManager : MonoBehaviour
             }
         }
 
+
+
+        if (_startWave == true) 
+        {
+           
+            Vector3 posToSpawn = new Vector3(Random.Range(-10f, 10f), 12f, 0);
+
+            GameObject newEnemy1 = Instantiate(_enemyPrefab2, posToSpawn, Quaternion.identity);
+
+            Debug.Log("EnemyPrefab2Spawned");
+
+            newEnemy1.transform.parent = _enemyContainer.transform;
+
+            yield return new WaitForSeconds(1F);
+        }
+
     }
-  
+
     IEnumerator SpawnAsteroidRoutine()
     {
         while (_stopSpawning == false)
         {
+           
+
             Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
 
-            GameObject Asteroid = Instantiate(_asteroidPrefab, posToSpawn, Quaternion.identity);
+             GameObject Asteroid = Instantiate(_asteroidPrefab, posToSpawn, Quaternion.identity);
 
-            yield return new WaitForSeconds(5.0f);
+            yield return new WaitForSeconds(Random.Range(3.0f,8.0f));
         }
     }
 
     IEnumerator SpawnEnemyRoutine()
     {
-        Debug.Log("spawn");
-        yield return new WaitForSeconds(10.0f);
+       
 
-        while (_stopSpawning == false)
+          if (_stopSpawning == false)    // while (_stopSpawning == false)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-10f, 10f), 12f, 0);
 
-            GameObject newEnemy = Instantiate(_enemyPrefab3, posToSpawn, Quaternion.identity);
+           GameObject newEnemy = Instantiate(_enemyPrefab3, posToSpawn, Quaternion.identity);
 
-           GameObject newEnemy1 = Instantiate(_enemyPrefab4, posToSpawn, Quaternion.identity);
+            Debug.Log("SpawnEnemyPrefab3");
 
-            newEnemy.transform.parent = _enemyContainer.transform;
-            yield return new WaitForSeconds(10.0f);
+            yield return new WaitForSeconds(Random.Range(1.0f, 8.0f));
+
+            //GameObject newEnemy1 = Instantiate(_enemyPrefab4, posToSpawn, Quaternion.identity);
+
+            // newEnemy.transform.parent = _enemyContainer.transform;
+
+            // newEnemy.transform.parent = _enemyContainer.transform;
+
+            // yield return new WaitForSeconds(10.0f);
 
             //never get here because in loop
             //then his line is called     
@@ -181,67 +206,66 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnPowerUpRoutine()
     {
-        
-        yield return new WaitForSeconds(10f);
-        while (_stopSpawning == false)
-        {
-            Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
 
-            int randomPowerUp = Random.Range(0, 3);
-
-            Instantiate(_powerups[randomPowerUp], posToSpawn, Quaternion.identity);
+       // yield return new WaitForSeconds(5f);
+      
+            WeightPowerUp();
 
             yield return new WaitForSeconds(Random.Range(3.0f, 8.0f));
 
-        }
+        
     }
 
     void WeightPowerUp()
-    {  
+    {
 
         Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
-       //foreach (var item in table)
+        //foreach (var item in table)
         {
-            //total += item / 1 ; 
-            
-        }
-       
-       RandomNumber = Random.Range(0, 150000); //since I am not using the coroutine I used a higher number so spawning a powerup is not too aggressive 
+           //
+           //total += item / 1 ; 
 
-            foreach (var weight  in table)
-            
-                for (int i = 0; i < table.Length; i++)
-       {    
-            if (RandomNumber <=  weight )
+        }
+
+        RandomNumber = Random.Range(0, 150); //since I am not using the coroutine I used a higher number so spawning a powerup is not too aggressive 
+
+        foreach (var weight in table)
+
+            for (int i = 0; i < table.Length; i++)
             {
-                    
+                if (RandomNumber <= weight)
+                {
+
                     Instantiate(_powerup[i], posToSpawn, Quaternion.identity);
-               return;
-            }
-   
-            else
-            {
-                RandomNumber -= weight;
-            }
+                    return;
+                }
 
-         
-        }
+                else
+                {
+                    RandomNumber -= weight;
+                }
+
+
+            }
     }
-      public void OnPlayerDeath()
-     {
-      _stopSpawning = true;
+    public void OnPlayerDeath()
+    {
+        _stopSpawning = true;
 
-     }
+        _startWave = false;
+
+    }
 
     public void Boss()
     {
-     
-           Vector3 posToSpawn = new Vector3(0, 16f, 0);
+        Debug.Log("boss Spawned");
 
-            GameObject newEnemy = Instantiate(_bossPrefab, posToSpawn, Quaternion.identity);
-        
-     }
-       
+        Vector3 posToSpawn = new Vector3(0, 16f, 0);
+
+        GameObject newEnemy = Instantiate(_bossPrefab, posToSpawn, Quaternion.identity);
+
+    }
+
 }
 
     

@@ -6,7 +6,9 @@ using System.Threading;
 using TMPro.EditorUtilities;
 using UnityEditorInternal;
 using UnityEngine;
-using UnityEngine. UI;
+using UnityEditor;
+using UnityEngine.UI;
+
 
 
 public class Player : MonoBehaviour
@@ -127,16 +129,20 @@ public class Player : MonoBehaviour
     [SerializeField]
     private bool _homingActive = false;
 
-    private bool _shiproll = true;
+    private Enemy _enemy;
 
     // Start is called before the first frame update
 
     void Start()
     {
+        
+
         _cameraShake = GameObject.Find("Camera_Shake").GetComponent<CameraShake>();
 
         if (_cameraShake == null)
         {
+            
+
             Debug.LogError("_cameraShake is Null");
         }
 
@@ -164,12 +170,11 @@ public class Player : MonoBehaviour
         if (_audioSource == null)
         {
             Debug.LogError("Audio source on player is null");
-        }
 
-        else
-        {
             _audioSource.clip = _laserSoundClip;
         }
+
+     
         //take the current position = new position (0,0,0)
         transform.position = new Vector3(0, -5.8f, 0);
 
@@ -183,9 +188,6 @@ public class Player : MonoBehaviour
 
         }
 
-        
-       
-
     }
 
     // Update is called once per frame
@@ -196,13 +198,17 @@ public class Player : MonoBehaviour
             Shoot();
         }
 
-        if (Input.GetKeyDown(KeyCode.B) && Time.time > _canFire && _laser == true)
+       
+
+        if (Input.GetKeyDown(KeyCode.B) && Time.time > _canFire)
         {
-            Bomb();
-
+           
+              Bomb();
+           
         }
-
-        CalculateMovement();
+      
+            
+            CalculateMovement();
 
         // _uIScript.UpdateAmmoDisplay(_ammo); causes ui message to blink and flicker rapidly so update it in the ammo void 
 
@@ -212,24 +218,8 @@ public class Player : MonoBehaviour
 
         //  }
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-           
-            
-            _anim.SetTrigger("TurnLeft") ;
-           
-        }
-
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-
-            
-            _anim.SetTrigger("TurnRight");
-
-        }
+       
     }
-        
-    
 
     void CalculateMovement()
     {
@@ -237,7 +227,19 @@ public class Player : MonoBehaviour
 
         float verticalInput = Input.GetAxis("Vertical");
 
-        
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+
+            _anim.SetTrigger("TurnLeft");
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+
+            _anim.SetTrigger("TurnRight");
+
+        }
 
 
         //Time.deltaTime is equivalent to real time
@@ -311,29 +313,27 @@ public class Player : MonoBehaviour
     void Shoot()
 
     {
-        
-        // if space key is pressed
-        //if triple shot is true
-        //fire 3 lasers(triple shot prefab)
-        //else fire 1 laser
-        //instantiate 3 laser (triple shot prefab)
         _canFire = Time.time + _fireRate;
-
 
         if (_isTripleShotActive == true)
         { //instantiate triple shot 
             Instantiate(_TripleShotPrefab, transform.position, Quaternion.identity);
-
+            _audioSource.Play();
         }
         else
         {
-            Instantiate(_laserPrefab, transform.position + new Vector3(-1.13f, -0.04f, 0), Quaternion.identity);
-
-            Instantiate(_laserPrefab, transform.position + new Vector3(1.13f, -0.04f, 0), Quaternion.identity);
-
+            Instantiate(_laserPrefab, transform.position + new Vector3(0.2f, 2.49f, 0), Quaternion.identity);
+           
             Ammo();
+
+            if (_audioSource != null)
+            {
+                _audioSource.Play();
+
+                Debug.Log("audio source is not null");
+            }
         }
-        _audioSource.Play();    //This will automatically play the sound clip
+      //  _audioSource.Play();    //This will automatically play the sound clip
         //play laser audio clip when shots fired
 
         if (_ammo == 0)
@@ -341,9 +341,7 @@ public class Player : MonoBehaviour
             _laser = false;
             _isTripleShotActive = false;
         }
-       
-      
-
+    
        if (_homingActive == true)
         {
             Instantiate(_homingMissile, transform.position + new Vector3(0f, 2.0f, 0), Quaternion.identity);
@@ -364,9 +362,7 @@ public class Player : MonoBehaviour
             Debug.Log("Max Ammo ! ");
             _laser = true;
         }
-        
-        
-
+  
     }
 
     public void HomingWeapon()
@@ -378,7 +374,6 @@ public class Player : MonoBehaviour
     public void Ammo()
     {
         _ammo--;
-
         _uIScript.UpdateAmmoDisplay(_ammo);
 
     }
@@ -400,7 +395,11 @@ public class Player : MonoBehaviour
         if (_bomb > 0)
         {
             _bomb--;
-            Instantiate(_nuke_prefab, transform.position + new Vector3(0, 1.83f, 0), Quaternion.identity);
+
+           Instantiate(_nuke_prefab, transform.position + new Vector3(0, 1.83f, 0), Quaternion.identity);
+
+           
+
         }
 
         else if (_bomb == 0)
@@ -416,6 +415,8 @@ public class Player : MonoBehaviour
         }
 
         _uIScript.UpdateBomb(_bomb);
+
+        
     }
 
    
@@ -457,8 +458,8 @@ public class Player : MonoBehaviour
 
         {
             Lives();
-            _cameraShake.ShakeCamera();
-          //  _uIScript.UpdateLives(_lives);
+          
+         
 
         }
 
@@ -516,7 +517,9 @@ public class Player : MonoBehaviour
     {
         // _speedBoostActive = true;  Not doing anything here not declared anywhere but here
         _speed *= _speedMultiplier;
+
         StartCoroutine(SpeedBoostPowerDownRoutine());
+
     }
 
     IEnumerator SpeedBoostPowerDownRoutine()
@@ -525,19 +528,6 @@ public class Player : MonoBehaviour
         //_speedBoostActive = false;
         _speed /= _speedMultiplier;
     }
-
-    /*public void ShieldActive()
-    {
-        
-        _isShieldActive = true;
-        _shieldPower = 3;
-        _shield.SetActive(true);
-
-        //enable the shield visualizer
-        _shieldVisualizer.color = new Color(0.9528f, 0.9490f, 0.8988f, 0f);
-
-    }  //0f, 0.9323f, 0.9622f, 1f  //0.9528f,0.9490f,0.8988f,0f
-   */
     public void AddScore(int points)
     {
         _score += points;
@@ -549,7 +539,6 @@ public class Player : MonoBehaviour
 
     // ammo count 100
     //communicate with ui and update ammo
-
     public void OneUp()
     {
         _lives = _lives + _oneUP;
@@ -574,28 +563,42 @@ public class Player : MonoBehaviour
         //need it to update UI but its not doing it.   You had it on update ammo instead of update lives
        
     }
-
-   
+ 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log("Player is hit by enemy laser");
 
         if (other.tag == "enemy laser")
-        {       
-          Damage();
-            Debug.Log("Player is hit");
+        {
+            if (_cameraShake == null)
+            {
+                Debug.LogError("Camera Shake is null");
+            }
+            else if (_cameraShake != null)
+            {
+                _cameraShake.ShakeCamera();
+            }        
+
+            Damage();
+
+            
 
             _homingMissile.SetActive(false);
+            
+
+
         }
 
         if(other.tag == "EnemyShield")
         {
             Damage();
+
             Debug.Log("Player hit Enemy Shield");
         }
 
         if(other.tag == "enemy")
         {
-            _homingActive = false ;
+            _homingMissile.SetActive(false);
         }
 
 

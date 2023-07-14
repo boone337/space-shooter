@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
+using UnityEditor;
+using UnityEditorInternal;
+
 
 public class Asteroid : MonoBehaviour
 
@@ -9,17 +13,12 @@ public class Asteroid : MonoBehaviour
     // [SerializeField]
     //private GameObject _Asteroid;
 
-    [SerializeField]
-    private GameObject _explosion_prefab;
-
-    [SerializeField]
-    private GameObject _model;
 
     [SerializeField]
     private float _speed = 9.0f;
 
     [SerializeField]
-    private float _rotateSpeed = 19.0f;
+    private float _rotateSpeed = 190.0f;
 
     private SpawnManager _spawnManager;
 
@@ -48,14 +47,22 @@ public class Asteroid : MonoBehaviour
     void Update()
 
     {
-        if (_isStarterAsteroid == false)
+        if (_isStarterAsteroid == true)
+
         {
-            transform.Translate(transform.up * -1 * _speed * Time.deltaTime);
+            transform.Rotate(Vector3.forward * _rotateSpeed * Time.deltaTime);
 
         }
-        // transform.Rotate(Vector3.down  * _rotateSpeed * Time.deltaTime);
-        //transform.Rotate(Vector3.forward * _rotateSpeed  * Time.deltaTime);
-        _model.transform.Rotate(Vector3.forward, _rotateSpeed * Time.deltaTime, Space.Self);
+
+        if (_isStarterAsteroid == false)
+        {
+            //  transform.Translate(transform.up * -1 * _speed * Time.deltaTime);
+            //  transform.Rotate(Vector3.forward * _speed * Time.deltaTime);   
+            //  transform.Rotate(Vector3.up * _rotateSpeed * Time.deltaTime);
+
+            transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        }
+
 
         if (transform.position.y < -9.0f)
         {
@@ -69,93 +76,100 @@ public class Asteroid : MonoBehaviour
             Destroy(transform.parent.gameObject);
         }
 
-
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            boom();
-            Debug.Log("Destroyed by Nuke!");
-        }
-
-        //transform.position = new Vector3(Random.Range(-8f, 8f),7, 0);
-
-            // Destroy (this.gameObject);
-
-
-            //transform.Translate(Vector3.down * _speed * Time.deltaTime);
-            //
-            //transform.Rotate(Vector3.down * _speed * Time.deltaTime);
-
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
 
-        if (other.tag == "laser")
+        if (other.tag == "Bomb")
         {
-            Debug.Log("Laser hit Asteroid");
-            
-            Destroy(other.gameObject);
+            Debug.Log("Bomb hit Asteroid");
+
+            Destroy(this.gameObject, 1f);
             if (_isStarterAsteroid == true)
 
             {
                 _spawnManager.StartSpawning();
 
             }
-            Instantiate(_explosion_prefab, transform.position, Quaternion.identity);
-            // Destroy(GetComponent<Collider2D>());
-            _anim.SetTrigger("On Enemy Death");
+            
+
             _speed = 0;
-            Destroy(this.gameObject, 1f);
-          
+            Destroy(this.gameObject);
+            _audioSource.Play();
         }
+
+
+        if (other.tag == "laser")
+        {
+
+            if (_isStarterAsteroid == true)
+
+            {
+                _spawnManager.StartSpawning();
+
+                Debug.Log("Laser hit Asteroid");
+
+                _speed = 0;
+
+                Destroy(this.gameObject, 1f);
+
+                if (_anim != null)
+
+               _anim.SetTrigger("On Asteroid Death");
+
+                Destroy(other.gameObject);
+
+                _audioSource.Play();
+            }
+
+            Debug.Log("Laser hit Asteroid");
+                      
+            _speed = 0;
+
+            Destroy(this.gameObject, 1f);
+
+            if (_anim != null)
+
+           _anim.SetTrigger("On Asteroid Death");
+
+           _audioSource.Play();
+
+        }
+
 
         if (other.tag == "Player")
         {
             Player player = other.transform.GetComponent<Player>();
             Debug.Log("player hit asteroid");
-            
+
+            if (_isStarterAsteroid == true)
+
+            {
+                _spawnManager.StartSpawning();
+
+            }
+
             //Destroy(_player);
             if (_player != null)
             {
                 _player.Damage();
 
             }
-            Instantiate(_explosion_prefab, transform.position, Quaternion.identity);
-            _anim.SetTrigger("On Enemy Death");
+           // Instantiate(_explosion_prefab, transform.position, Quaternion.identity);
+            _anim.SetTrigger("On Asteroid Death");
             _speed = 0;
            
             Destroy(this.gameObject, 1f);
             _speed = 0;
- 
+            _audioSource.Play();
         }
 
         //trying to implement bomb damage through player instead of bombscript
 
     }
 
-    void boom()
-    {
-        //if (Input.GetKeyDown(KeyCode.B))
-
-
-        Instantiate(_explosion_prefab, transform.position, Quaternion.identity);
-        _anim.SetTrigger("On Enemy Death");
-        _speed = 0;
-
-        Destroy(this.gameObject, 1f);
-        _speed = 0;
-
-    }
-
-
-
-
-
-
-    //check for laser collision (Trigger)
-    //instantiate explosion at the position of the asteroid (us)
-    //destroy the explosion   
-
+  
 
 
 

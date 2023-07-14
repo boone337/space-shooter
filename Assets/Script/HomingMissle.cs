@@ -71,7 +71,22 @@ public class HomingMissle : MonoBehaviour
 
         } 
 
+        if (transform.position.x > 17f)
+        {
 
+            if (transform.parent != null)
+            {
+                Destroy(transform.parent.gameObject);
+            }
+            Destroy(this.gameObject);
+        }
+
+        else if(transform.position.x<-17f && transform.parent != null)
+        { 
+            
+           
+                
+         }
     }
     private void OnTriggerEnter2D(Collider2D other)
     {

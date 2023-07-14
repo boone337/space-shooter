@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class Enemy2 : MonoBehaviour
 {
@@ -49,6 +53,8 @@ public class Enemy2 : MonoBehaviour
         {
             Debug.LogError("Animator is Null");
         }
+
+       
     }
 
     // Update is called once per frame
@@ -61,41 +67,19 @@ public class Enemy2 : MonoBehaviour
             _fireRate = Random.Range(3f, 7F);
             _canFire = Time.time + _fireRate;
             GameObject enemyLaser = Instantiate(_laserPrefab, transform.position + new Vector3(0f, 0f, 0), transform.rotation);  //transform.rotation lets projectile fire towards position facing
-                                                                                                                                   // GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);  //Quaternion.identity fires projectile foward only no matter what direction facing
+                                                                                                                                 // GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);  //Quaternion.identity fires projectile foward only no matter what direction facing
             laser[] lasers = enemyLaser.GetComponentsInChildren<laser>();
 
-           // for (int i = 0; i < lasers.Length; i++)
-           // {
-          //      lasers[i].AssignEnemyLaser();
+            // for (int i = 0; i < lasers.Length; i++)
+            // {
+            //      lasers[i].AssignEnemyLaser();
 
-          //  }
+            //  }
         }
 
-        Bomb();
+
     }
 
-    void Bomb()      //trying to implement bomb damage through player instead of bombscript
-    {
-
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            StartCoroutine(Damage());
-
-        }
-
-        IEnumerator Damage()
-        {
-
-            yield return new WaitForSeconds(.5f);
-
-            Destroy(this.gameObject);
-            _anim.SetTrigger("On Bomb Death");
-            _audioSource.Play();
-            // Destroy(this.gameObject);
-
-        }
-
-    }
 
     void CalculateMovement()
     {
@@ -132,7 +116,7 @@ public class Enemy2 : MonoBehaviour
                 
             }
             //trigger anim to set explosion
-            _anim.SetTrigger("On Enemy Death");
+            _anim.SetTrigger("On Asteroid Death");
             _speed = 0;
             _audioSource.Play();
             Destroy(this.gameObject, 1f);
@@ -147,29 +131,66 @@ public class Enemy2 : MonoBehaviour
                 _player.AddScore(10);
             }
             //trigger anim 
-            _anim.SetTrigger("On Enemy Death");
+            if (_anim != null)
+            {
+                _anim.SetTrigger("On Asteroid Death");
+            }
+
+            Destroy(this.gameObject, 1f);
+           
+            Debug.Log(" laser hit enemy variant");
+           
             _speed = 0;
             _audioSource.Play();
 
             Destroy(GetComponent<Collider2D>());   //this will cause double explosions even after death
+           
+
+        }
+
+        else if (other.tag == "Bomb")
+        {
             Destroy(this.gameObject, 1f);
 
+            StartCoroutine(DestroySelfCoroutine());
 
-
-            // Player player = GameObject.Find("Player").GetComponent<Player>();
-            //this was mad global at the top so it is not needed every where
-
-            //add 10 to score
-            //create method to add 10 to score
-
-            //communicate with ui to add score
-            //if other islaser  //destroy us // laser
+            Debug.Log("TEST DAMAGE NUKE");    //So we are getting things to blow up now.  next is to do a coroutine to delay the effects.  6.26.23 fuck yeah!! 
         }
+    }
 
-        else if (other.tag == "enemy laser")
+    public void DestroySelf()
+    {
+        StartCoroutine(DestroySelfCoroutine());
+    }
+
+    IEnumerator DestroySelfCoroutine()
+    {
+        yield return new WaitForSeconds(1.5f);
+
+
+        Destroy(this.gameObject, 1f);
+
+        Destroy(GetComponent<Collider2D>());
+
+        if (_anim != null)
+
+        { _anim.SetTrigger("On Asteroid Death"); }
+
+        else if (_anim == null)
         {
-            Debug.Log("no damage no emotional damage");
+            Debug.Log("Anim is null");
         }
+
+        if (_player != null)
+        {
+            _player.AddScore(10);
+        }
+
+        _audioSource.Play();
+
+        Debug.Log("Enemy destroyed by bomb");
+
 
     }
+
 }

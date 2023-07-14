@@ -1,13 +1,20 @@
-﻿using JetBrains.Annotations;
+﻿//using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 //using System.Numerics;  fOR SOME REASON THIS LINE THREW AN ERROR CODE.  never had a problem up until now 4.16.23
 using UnityEngine;
 using UnityEngine.UIElements;
+using TMPro.EditorUtilities;
+using UnityEditorInternal;
+using UnityEditor;
+using UnityEngine.UI;
+
 
 public class Enemy : MonoBehaviour
 
 {
+    public string objectTag = "enemy";
+
     [SerializeField]
     private float _fireRate = 3.0f;
 
@@ -48,6 +55,9 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameObject[] clones = GameObject.FindGameObjectsWithTag("enemy");
+
+
         _player = GameObject.Find("Player").GetComponent<Player>();
 
        // _laser = GameObject.Find("laser").GetComponent<laser>();  this shit right here caused my enemy not to explode!!!!! 
@@ -63,12 +73,15 @@ public class Enemy : MonoBehaviour
             Debug.LogError("The Player is Null.");
 
         }
+
         _anim = GetComponent<Animator>();
 
         if (_anim == null)
         {
             Debug.LogError("Animator is Null");
         }
+
+
 
     }
 
@@ -77,33 +90,17 @@ public class Enemy : MonoBehaviour
     {
        // EvadePlayer();   I am not using this at the moment 
 
-        RayCast();
+        
 
         CalculateMovement();
 
-       /* if (Time.time > _canFire)
-        {
-            _fireRate = Random.Range(3f, 7F);
-            _canFire = Time.time + _fireRate;
-            GameObject enemyLaser = Instantiate(_laserPrefab, transform.position + new Vector3(0, -2.9f, 0), transform.rotation);  //transform.rotation lets projectile fire towards position facing
-                                                                                                                                   // GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);  //Quaternion.identity fires projectile foward only no matter what direction facing
-            laser[] lasers = enemyLaser.GetComponentsInChildren<laser>();
-
-            for (int i = 0; i < lasers.Length; i++)
-            {
-                lasers[i].AssignEnemyLaser();
-
-            }
-        }  */
-
-        Bomb();
 
     }
-    public void RayCast()
+    public void RayCast()  //was using raycast in update and was getting over 1000 debug player hit laser codes.  
     {
         Debug.DrawRay(transform.position, -Vector3.up * 10, Color.white, 0);
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, 10, LayerMask.GetMask("Player"));
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, 40, LayerMask.GetMask("Player"));
 
         //RaycastHit2D hit2 = Physics2D.Raycast(transform.position, -Vector2.up, 30, LayerMask.GetMask("LaserLayer")); //add get layermask for raycast to work
 
@@ -161,69 +158,42 @@ public class Enemy : MonoBehaviour
        GameObject enemyLaser = Instantiate(_laserPrefab, transform.position + new Vector3(0, -2.9f, 0), transform.rotation);
     }
 
+    public void CalculateMovement()
+    {
+        transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-    public void Bomb()      //trying to implement bomb damage through player instead of bombscript
-
-    { 
-            if (Input.GetKeyDown(KeyCode.B))
-            {
-                StartCoroutine(Damage());
-
-            }
-
-            IEnumerator Damage()
-            {
-
-                yield return new WaitForSeconds(.5f);
-
-                Destroy(this.gameObject);
-
-                _anim.SetTrigger("On Bomb Death");
-
-                _audioSource.Play();
-
-               
-
-            }
-
-        }
-
-       public void CalculateMovement()
+        if (transform.position.y < -9f)
         {
-            transform.Translate(Vector3.down * _speed * Time.deltaTime);
+            transform.position = new Vector3(Random.Range(-8f, 8f), 7, 0);
 
-            //move down at 4 meters per second
+        }
+        if (_player != null) 
+        {
+            RayCast();
 
-            //if bottom screen respawn with a new random position
+        }
+    }
 
-            if (transform.position.y < -9f)
+    public void ShieldActive()
+    {
+        if (_shieldActive == true)
+        {
+            _shieldhit--;
+
+            if (_shieldhit == 0)
             {
-                transform.position = new Vector3(Random.Range(-8f, 8f), 7, 0); 
-
+                Shield();
+                _shieldActive = false;
             }
 
         }
 
-        public void ShieldActive()
-        {
-            if (_shieldActive == true)
-            {
-                _shieldhit--;
+    }
+    void Shield()
+    {
+        _shield.SetActive(false);
 
-                if (_shieldhit == 0)
-                {
-                  Shield();
-                  _shieldActive = false;
-                }
-             
-            }
-
-        }
-        void Shield()
-        {
-            _shield.SetActive(false);
-
-        }
+    }
 
     void OnTriggerEnter2D(Collider2D other)
 
@@ -268,7 +238,7 @@ public class Enemy : MonoBehaviour
 
             }
             //trigger anim to set explosion
-            _anim.SetTrigger("On Enemy Death");
+            _anim.SetTrigger("On Asteroid Death");
             _speed = 0;
             _audioSource.Play();
             Destroy(this.gameObject, 1f);
@@ -281,19 +251,15 @@ public class Enemy : MonoBehaviour
 
             Debug.Log("laser hit enemy");
 
-            Destroy(this.gameObject, 1f);
-
-            Destroy(other.gameObject);
-
-           // _anim.SetTrigger("On Enemy Death");
+          
 
             if (_anim != null)
 
-            { _anim.SetTrigger("On Enemy Death"); }
+            { _anim.SetTrigger("On Asteroid Death"); }
 
-            else
+            else if (_anim == null)
             {
-                Debug.Log("explode anim is null");
+                Debug.Log("Anim is null");
             }
 
             if (_player != null)
@@ -301,29 +267,26 @@ public class Enemy : MonoBehaviour
                 _player.AddScore(10);
             }
 
+            Destroy(this.gameObject, 1f);
+
+            Destroy(other.gameObject);
 
             //  _anim.SetTrigger("OnAlienDeath");
             _speed = 0;
+
             _audioSource.Play();
 
             Destroy(GetComponent<Collider2D>());   //this will cause double explosions even after death
 
-
-
-
-            // Player player = GameObject.Find("Player").GetComponent<Player>();
-            //this was mad global at the top so it is not needed every where
-
-            //add 10 to score
-            //create method to add 10 to score
-
-            //communicate with ui to add score
-            //if other islaser  //destroy us // laser
         }
 
-        else if (other.tag == "enemy laser")
+        else if (other.tag == "Bomb")
         {
-            Debug.Log("no damage no emotional damage");
+            Destroy(this.gameObject, 1f);
+
+            
+
+            Debug.Log("TEST DAMAGE NUKE");    //So we are getting things to blow up now.  next is to do a coroutine to delay the effects.  6.26.23 fuck yeah!! 
         }
 
     }
@@ -360,7 +323,6 @@ public class Enemy : MonoBehaviour
 
     }
 
-
     IEnumerator Right()
     {
         Vector2 _currentPos = transform.position;
@@ -374,7 +336,10 @@ public class Enemy : MonoBehaviour
             yield return null;
         }
 
-    }  
+    }
+
+   
+
 }
 
 
