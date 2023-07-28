@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditorInternal;
+//using UnityEditorInternal;
 using UnityEditor;
 using UnityEngine.UI;
-using TMPro.EditorUtilities;
+//using TMPro.EditorUtilities;
 using UnityEngine.UIElements;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -57,14 +57,14 @@ public class BombScript : MonoBehaviour
             Debug.LogError(" Bomb AudioSource is null");
         }
 
-        
+        StartCoroutine(Bomb());
     }
 
     // Update is called once per frame
     void  Update()
     {
 
-
+       
         MoveUp();
 
     }
@@ -77,23 +77,23 @@ public class BombScript : MonoBehaviour
         {
             if (transform.parent != null)
             {
-
+               // StartCoroutine(Bomb());
                 Destroy(transform.parent.gameObject);
             }
 
-
+           // _anim.SetTrigger("On Bomb Death");
             Destroy(this.gameObject);
-
+           
         }
 
     }
-     public void startCoroutine()
+   /*  public void startCoroutine()
      {
 
 
          StartCoroutine(Bomb());     
 
-     } 
+     } */
 
     IEnumerator Bomb()
 

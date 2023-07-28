@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-using TMPro.EditorUtilities;
-using UnityEditorInternal;
+//using TMPro.EditorUtilities;
+//using UnityEditorInternal;
 using UnityEditor;
 using UnityEngine.UI;
 
@@ -164,9 +164,11 @@ public class SpaceAlien : MonoBehaviour
             //if other islaser  //destroy us // laser
         }
 
-        else if (other.tag == "enemy laser")
+        else if (other.tag == "Bomb")
         {
-            Debug.Log("no damage no emotional damage");
+            Destroy(this.gameObject, 1f);
+
+            Debug.Log("TEST DAMAGE NUKE");    //So we are getting things to blow up now.  next is to do a coroutine to delay the effects.  6.26.23 fuck yeah!! 
         }
 
     }

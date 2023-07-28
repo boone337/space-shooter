@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor;
-using UnityEditorInternal;
+//using UnityEditorInternal;
 
 
 public class Asteroid : MonoBehaviour

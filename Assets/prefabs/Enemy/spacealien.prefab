@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6895211436353789595}
   m_Layer: 0
   m_Name: spacealien
-  m_TagString: Enemy
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

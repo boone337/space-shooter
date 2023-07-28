@@ -5938,7 +5938,7 @@ MonoBehaviour:
     type: 3}
   _enemyPrefab2: {fileID: 2854232215059146839, guid: f446528501574f14ab5cbb673f5bf377,
     type: 3}
-  _enemyPrefab3: {fileID: 287067682825338075, guid: 91d788d3716e5e841b40fe9377ecf0a0,
+  _enemyPrefab3: {fileID: 4629302978511305130, guid: 568d87cde46ec2641b8544101558cb5a,
     type: 3}
   _bossPrefab: {fileID: 5256959557674924547, guid: da216ef3580994240a6e687da26af8b7,
     type: 3}
@@ -5955,7 +5955,7 @@ MonoBehaviour:
   - {fileID: 3312960189804074966, guid: 1b12333194c56b5409f99344294f5800, type: 3}
   total: 0
   RandomNumber: 0
-  table: 640000001e000000020000000f00000028000000
+  table: 32000000140000000f0000000a00000005000000
 --- !u!4 &1271571173
 Transform:
   m_ObjectHideFlags: 0

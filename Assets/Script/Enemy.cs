@@ -3,9 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 //using System.Numerics;  fOR SOME REASON THIS LINE THREW AN ERROR CODE.  never had a problem up until now 4.16.23
 using UnityEngine;
-using UnityEngine.UIElements;
-using TMPro.EditorUtilities;
-using UnityEditorInternal;
+//using TMPro.EditorUtilities;
+//using UnityEditorInternal;
 using UnityEditor;
 using UnityEngine.UI;
 
@@ -28,7 +27,7 @@ public class Enemy : MonoBehaviour
     private AudioSource _audioSource;
 
     [SerializeField]
-    private float _speed = 4f;
+    private float _speed = 3f;
 
     private Player _player;
 
@@ -48,7 +47,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private int _shieldhit = 1;
 
-    private bool canFire = true;
+  //  private bool canFire = true;
 
     private GameObject laserClone;
 

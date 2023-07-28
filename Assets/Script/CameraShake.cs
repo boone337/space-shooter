@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using UnityEditor;
-using UnityEditorInternal;
+//using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 //using TMPro.EditorUtilities;
@@ -25,7 +25,7 @@ public class CameraShake : MonoBehaviour
     [SerializeField]
     private float _shakeAmount = 2f;
 
-    private float _nukeShake = 3.0f;
+    //private float _nukeShake = 3.0f;
 
     private bool _canShake = false;
 
@@ -56,7 +56,7 @@ public class CameraShake : MonoBehaviour
 
     public void ShakeCamera()
     {
-        if (_canShake = true)
+        if (_canShake == true)
         {
             StartCoroutine(ShakeCoroutine());
         }
