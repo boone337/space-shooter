@@ -112,11 +112,13 @@ public class Asteroid : MonoBehaviour
 
                 _speed = 0;
 
-                Destroy(this.gameObject, 1f);
+                
 
                 if (_anim != null)
 
                _anim.SetTrigger("On Asteroid Death");
+
+                Destroy(this.gameObject, 1f);
 
                 Destroy(other.gameObject);
 

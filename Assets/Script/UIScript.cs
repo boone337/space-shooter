@@ -148,6 +148,10 @@ public class UIScript : MonoBehaviour
 
         _bossLifeBar.fillAmount = _bosshealth / 100f;
 
+        if ( _bosshealth == 0 )       
+        {
+            GameOverSequence();
+        }
 
     }
 

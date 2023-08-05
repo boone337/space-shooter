@@ -322,7 +322,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            Instantiate(_laserPrefab, transform.position + new Vector3(0.2f, 2.49f, 0), Quaternion.identity);
+            Instantiate(_laserPrefab, transform.position + new Vector3(.02f, 2.49f, 0), Quaternion.identity);
            
             Ammo();
 
@@ -447,32 +447,32 @@ public class Player : MonoBehaviour
                 _shield.SetActive(false);
                 return;
             }
-            else if (_isShieldActive == false)
+           /* else if (_isShieldActive == false)
             {
-                _lives--;
+                Lives();
                 //or lives--;     //_lives = _lives -1;     //check if dead//destroy us
                 _uIScript.UpdateLives(_lives);
-            }
+            } */
         }
-        if (_isShieldActive == false)
+       if (_isShieldActive == false)
 
         {
             Lives();
-          
-         
+
+            _uIScript.UpdateLives(_lives);
 
         }
 
         if (_lives < 1)
 
         {
-            _spawnManager.OnPlayerDeath();
-            Destroy(this.gameObject,.5f);
+           
             if (_anim != null)
 
             {
-                _anim.SetTrigger("OnPlayerDeath"); 
-            
+                _anim.SetTrigger("OnPlayerDeath");
+                _spawnManager.OnPlayerDeath();
+                Destroy(this.gameObject, 1f);
             }
         }
 
@@ -556,13 +556,13 @@ public class Player : MonoBehaviour
     {
 
         Debug.Log("RedBomb");
-        _lives--;
-        _uIScript.UpdateLives(_lives);
+        
+      //  _uIScript.UpdateLives(_lives);
 
         // need it to blow up when contact is made
         //need it to update UI but its not doing it.   You had it on update ammo instead of update lives
        
-    }
+    } 
  
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -581,12 +581,30 @@ public class Player : MonoBehaviour
 
             Damage();
 
-            
+            _homingMissile.SetActive(false);
+ 
+        }
+
+        if(other.tag == "enemy")
+        {
+            Damage();
+
+            Debug.Log("Player Hit Enemy");
 
             _homingMissile.SetActive(false);
-            
 
+            _cameraShake.ShakeCamera();
+        }
 
+        if (other.tag == "redbomb")
+        {
+            Damage();
+
+            Debug.Log("Player Hit bomb");
+
+            _homingMissile.SetActive(false);
+
+            _cameraShake.ShakeCamera();
         }
 
         if(other.tag == "EnemyShield")
@@ -594,13 +612,11 @@ public class Player : MonoBehaviour
             Damage();
 
             Debug.Log("Player hit Enemy Shield");
+
+            _cameraShake.ShakeCamera();
         }
 
-        if(other.tag == "enemy")
-        {
-            _homingMissile.SetActive(false);
-        }
-
+        
 
     }
 }

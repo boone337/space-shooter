@@ -5307,7 +5307,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 554804caa8b83b6418e0e08b5e0a07f9, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.79
+  m_Volume: 0.107
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -5680,12 +5680,12 @@ PrefabInstance:
     - target: {fileID: 5077908707663144090, guid: 48b06f0c984052948bb3ef0a998b3e4d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.2
+      value: -0.27
       objectReference: {fileID: 0}
     - target: {fileID: 5077908707663144090, guid: 48b06f0c984052948bb3ef0a998b3e4d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.6
+      value: 5.63
       objectReference: {fileID: 0}
     - target: {fileID: 5077908707663144090, guid: 48b06f0c984052948bb3ef0a998b3e4d,
         type: 3}
@@ -5938,7 +5938,7 @@ MonoBehaviour:
     type: 3}
   _enemyPrefab2: {fileID: 2854232215059146839, guid: f446528501574f14ab5cbb673f5bf377,
     type: 3}
-  _enemyPrefab3: {fileID: 4629302978511305130, guid: 568d87cde46ec2641b8544101558cb5a,
+  _enemyPrefab3: {fileID: 287067682825338075, guid: 91d788d3716e5e841b40fe9377ecf0a0,
     type: 3}
   _bossPrefab: {fileID: 5256959557674924547, guid: da216ef3580994240a6e687da26af8b7,
     type: 3}
@@ -6263,7 +6263,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.496
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -7070,12 +7070,12 @@ PrefabInstance:
     - target: {fileID: 6148321917836455844, guid: 9d68e4341b06e59468dc6ef519c60673,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6148321917836455844, guid: 9d68e4341b06e59468dc6ef519c60673,
         type: 3}
       propertyPath: _shakeAmount
-      value: 0.5
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 6148321917836455844, guid: 9d68e4341b06e59468dc6ef519c60673,
         type: 3}
@@ -7095,12 +7095,12 @@ PrefabInstance:
     - target: {fileID: 6148321917836455848, guid: 9d68e4341b06e59468dc6ef519c60673,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -16.74
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6148321917836455848, guid: 9d68e4341b06e59468dc6ef519c60673,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.42
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6148321917836455848, guid: 9d68e4341b06e59468dc6ef519c60673,
         type: 3}
@@ -7141,6 +7141,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6148321917836455851, guid: 9d68e4341b06e59468dc6ef519c60673,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.202
       objectReference: {fileID: 0}
     - target: {fileID: 6148321917836455853, guid: 9d68e4341b06e59468dc6ef519c60673,
         type: 3}

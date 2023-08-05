@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
-using UnityEditorInternal;
 //using TMPro.EditorUtilities;
 //using UnityEditor.Experimental.GraphView;
 //using UnityEditorInternal;
@@ -79,6 +78,8 @@ public class SpawnManager : MonoBehaviour
      
             StartCoroutine(SpawnEnemyRoutine());
 
+            StartCoroutine(SpawnEnemyRoutine2());
+
             StartCoroutine(SpawnPowerUpRoutine());
 
             StartCoroutine(SpawnAsteroidRoutine());
@@ -91,7 +92,7 @@ public class SpawnManager : MonoBehaviour
     
     IEnumerator SpawnPowerUpRoutine()
     {
-        while (_startWave == true)
+        while (_player != null)
         {
             WeightPowerUp();
 
@@ -187,9 +188,17 @@ public class SpawnManager : MonoBehaviour
 
 
 
-        if (_startWave == true) 
+      
+
+    }
+
+    IEnumerator SpawnEnemyRoutine2()
+    {
+        while (_startWave == true )
         {
-           
+            yield return new WaitForSeconds( 15f
+                );
+
             Vector3 posToSpawn = new Vector3(Random.Range(-10f, 10f), 12f, 0);
 
             GameObject newEnemy1 = Instantiate(_enemyPrefab2, posToSpawn, Quaternion.identity);
@@ -198,11 +207,12 @@ public class SpawnManager : MonoBehaviour
 
             newEnemy1.transform.parent = _enemyContainer.transform;
 
-            yield return new WaitForSeconds(1F);
+            
         }
 
-    }
 
+
+    }
     IEnumerator SpawnAsteroidRoutine()
     {
         while (_stopSpawning == false)
@@ -221,15 +231,17 @@ public class SpawnManager : MonoBehaviour
     {
        
 
-          if (_stopSpawning == false)    // while (_stopSpawning == false)
+          while (_startWave == true)    // while (_stopSpawning == false)
         {
+            yield return new WaitForSeconds(Random.Range(5.0f, 10.0f));
+
             Vector3 posToSpawn = new Vector3(Random.Range(-10f, 10f), 12f, 0);
 
            GameObject newEnemy = Instantiate(_enemyPrefab3, posToSpawn, Quaternion.identity);
 
             Debug.Log("SpawnEnemyPrefab3");
 
-            yield return new WaitForSeconds(Random.Range(1.0f, 5.0f));
+            
 
         }
     }

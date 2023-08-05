@@ -15,6 +15,7 @@ TagManager:
   - EnemyShield
   - power up
   - Bomb
+  - redbomb
   layers:
   - Default
   - TransparentFX

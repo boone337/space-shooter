@@ -77,6 +77,8 @@ public class CameraShake : MonoBehaviour
         }
         cameraTransform.localPosition = originalCameraPos;
         _canShake = false;
+
+        Debug.Log("can shake is working");
     }
 
     /* public void StartCamerashakeEffect()

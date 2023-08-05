@@ -213,6 +213,8 @@ public class BossScript : MonoBehaviour
 
             _anim.SetTrigger("death");
         }
+
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
