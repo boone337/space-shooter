@@ -63,7 +63,6 @@ public class Asteroid : MonoBehaviour
             transform.Translate(Vector3.down * _speed * Time.deltaTime);
         }
 
-
         if (transform.position.y < -9.0f)
         {
 
@@ -75,7 +74,6 @@ public class Asteroid : MonoBehaviour
 
             Destroy(transform.parent.gameObject);
         }
-
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -86,16 +84,17 @@ public class Asteroid : MonoBehaviour
             Debug.Log("Bomb hit Asteroid");
 
             Destroy(this.gameObject, 1f);
+
             if (_isStarterAsteroid == true)
 
             {
                 _spawnManager.StartSpawning();
-
             }
-            
 
             _speed = 0;
+
             Destroy(this.gameObject);
+
             _audioSource.Play();
         }
 
@@ -143,6 +142,7 @@ public class Asteroid : MonoBehaviour
         if (other.tag == "Player")
         {
             Player player = other.transform.GetComponent<Player>();
+
             Debug.Log("player hit asteroid");
 
             if (_isStarterAsteroid == true)
@@ -166,24 +166,7 @@ public class Asteroid : MonoBehaviour
             _speed = 0;
             _audioSource.Play();
         }
-
-        //trying to implement bomb damage through player instead of bombscript
-
     }
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 

@@ -39,8 +39,6 @@ public class PowerUp : MonoBehaviour
 
        }
 
-        
-
         // _audioSource = GetComponent<AudioSource>(); not needed with audio clip
         //transform.position = new Vector3(0, 11.0f, 0);  This code here will conflict with spawn manager
         //Used by itself is ok, but used with spawn manager random x axis will cause it to stay at 0.  
@@ -162,16 +160,12 @@ public class PowerUp : MonoBehaviour
 
                 }
 
-                Destroy(this.gameObject, 1.0f);
+                Destroy(this.gameObject, .5f);
                 
             }
-
         }
 
-      
-
     }
-
 
     //OnTriggerCollision
     //Only be collected by the player (Hint:use tags)
@@ -203,6 +197,4 @@ public class PowerUp : MonoBehaviour
     //play speed powerup
     //else if powerup is 2
     //shields powerup
-
-
 }

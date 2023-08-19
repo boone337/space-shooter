@@ -135,14 +135,10 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        
-
         _cameraShake = GameObject.Find("Camera_Shake").GetComponent<CameraShake>();
 
         if (_cameraShake == null)
         {
-            
-
             Debug.LogError("_cameraShake is Null");
         }
 
@@ -173,8 +169,7 @@ public class Player : MonoBehaviour
 
             _audioSource.clip = _laserSoundClip;
         }
-
-     
+    
         //take the current position = new position (0,0,0)
         transform.position = new Vector3(0, -5.8f, 0);
 
@@ -185,9 +180,7 @@ public class Player : MonoBehaviour
         if (_anim == null)
         {
             Debug.LogError("Animator is Null");
-
         }
-
     }
 
     // Update is called once per frame
@@ -198,18 +191,12 @@ public class Player : MonoBehaviour
             Shoot();
         }
 
-       
-
         if (Input.GetKeyDown(KeyCode.B) && Time.time > _canFire)
-        {
-           
-              Bomb();
-           
+        {         
+              Bomb();          
         }
-      
-            
+                  
             CalculateMovement();
-
         // _uIScript.UpdateAmmoDisplay(_ammo); causes ui message to blink and flicker rapidly so update it in the ammo void 
 
         //  if (_ammo > 0)
@@ -241,7 +228,6 @@ public class Player : MonoBehaviour
 
         }
 
-
         //Time.deltaTime is equivalent to real time
         // transform.translate(new Vector3(horizontal, vertical, 0) * speed * Time.deltaTime);
         //more optimal way to code.  now you can have one line of code instead of two
@@ -272,7 +258,6 @@ public class Player : MonoBehaviour
         }
         if (_thrusterLevel == 100)
         {
-
             _thrusterLevel = 100;   //4th
         }
         else
@@ -298,15 +283,15 @@ public class Player : MonoBehaviour
         //if player on the x >11  then x pos = -11
         //else if player on x = -11 then pos = 11
 
-        if (transform.position.x >= 11)
+        if (transform.position.x >= 17)
         {
-            transform.position = new Vector3(-11, transform.position.y, 0);
+            transform.position = new Vector3(-15, transform.position.y, 0);
 
         }
 
-        else if (transform.position.x <= -11)
+        else if (transform.position.x <= -15)
         {
-            transform.position = new Vector3(11, transform.position.y, 0);
+            transform.position = new Vector3(17, transform.position.y, 0);
         }
     }
 
@@ -370,14 +355,12 @@ public class Player : MonoBehaviour
         _homingActive = true;
         _homingMissile.SetActive(true);
     }
-
     public void Ammo()
     {
         _ammo--;
         _uIScript.UpdateAmmoDisplay(_ammo);
 
     }
-
     public void ShieldActive()
     {
 
@@ -398,31 +381,24 @@ public class Player : MonoBehaviour
 
            Instantiate(_nuke_prefab, transform.position + new Vector3(0, 1.83f, 0), Quaternion.identity);
 
-           
-
         }
 
         else if (_bomb == 0)
         {
             _bomb = 0;
-
         }
 
         if (_bomb > 3)
-
         {
             _bomb = 3;
         }
 
-        _uIScript.UpdateBomb(_bomb);
-
-        
+        _uIScript.UpdateBomb(_bomb);       
     }
 
    
     public void Damage()
     {
-
         // if shields are active do nothing
         //deactivate shield
         //return;
@@ -438,7 +414,6 @@ public class Player : MonoBehaviour
             }
             if (_shieldPower == 1)
             {
-
                 _shieldVisualizer.color = new Color(0.9607f, 0.0f, 0.0544f, 1f);
             }
             if (_shieldPower == 0)
@@ -455,20 +430,15 @@ public class Player : MonoBehaviour
             } */
         }
        if (_isShieldActive == false)
-
         {
             Lives();
 
             _uIScript.UpdateLives(_lives);
-
         }
 
         if (_lives < 1)
-
-        {
-           
+        {         
             if (_anim != null)
-
             {
                 _anim.SetTrigger("OnPlayerDeath");
                 _spawnManager.OnPlayerDeath();
@@ -488,13 +458,11 @@ public class Player : MonoBehaviour
             Debug.Log("left engine damage");
         }
     }
-
     public void Lives()
     {
         _lives--;
         _uIScript.UpdateLives(_lives);
     }
-
     public void TripleShotActive()
     {
         //tripleShotActive becomes true (first)
@@ -502,7 +470,6 @@ public class Player : MonoBehaviour
         _isTripleShotActive = true;       //(first)      
         StartCoroutine(TripleShotPowerDownRoutine());   //(third)     
     }
-
     IEnumerator TripleShotPowerDownRoutine()   //(second)
     {
         yield return new WaitForSeconds(5.0f);    //after 5 sec becomes false
@@ -512,16 +479,13 @@ public class Player : MonoBehaviour
     //IEnumerator Triple Shot Powr down Routine
     //wait 5 seconds
     //set the tirple shot to false
-
     public void SpeedBoostActive()
     {
         // _speedBoostActive = true;  Not doing anything here not declared anywhere but here
         _speed *= _speedMultiplier;
 
         StartCoroutine(SpeedBoostPowerDownRoutine());
-
     }
-
     IEnumerator SpeedBoostPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
@@ -549,21 +513,16 @@ public class Player : MonoBehaviour
 
         }
         _uIScript.UpdateLives(_lives);
-
     }
-
     public void RedBomb()
     {
-
         Debug.Log("RedBomb");
         
       //  _uIScript.UpdateLives(_lives);
 
         // need it to blow up when contact is made
-        //need it to update UI but its not doing it.   You had it on update ammo instead of update lives
-       
+        //need it to update UI but its not doing it.   You had it on update ammo instead of update lives     
     } 
- 
     private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("Player is hit by enemy laser");
@@ -582,7 +541,6 @@ public class Player : MonoBehaviour
             Damage();
 
             _homingMissile.SetActive(false);
- 
         }
 
         if(other.tag == "enemy")
@@ -615,9 +573,6 @@ public class Player : MonoBehaviour
 
             _cameraShake.ShakeCamera();
         }
-
-        
-
     }
 }
 

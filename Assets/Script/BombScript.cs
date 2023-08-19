@@ -62,11 +62,8 @@ public class BombScript : MonoBehaviour
 
     // Update is called once per frame
     void  Update()
-    {
-
-       
+    {     
         MoveUp();
-
     }
 
     void MoveUp()
@@ -87,14 +84,6 @@ public class BombScript : MonoBehaviour
         }
 
     }
-   /*  public void startCoroutine()
-     {
-
-
-         StartCoroutine(Bomb());     
-
-     } */
-
     IEnumerator Bomb()
 
     {
@@ -116,9 +105,7 @@ public class BombScript : MonoBehaviour
 
         Debug.Log("Bomb blew up");
 
-      //  Destroy(transform.parent.gameObject);
-        
-
+      //  Destroy(transform.parent.gameObject);       
     }
 
     private void OnTriggerEnter(Collider other)

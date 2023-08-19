@@ -54,9 +54,7 @@ public class SpaceAlien : MonoBehaviour
         {
             Debug.LogError("Animator is Null");
         }
-
     }
-
 
     // Update is called once per frame
     void Update()
@@ -73,9 +71,7 @@ public class SpaceAlien : MonoBehaviour
             CreateBullet(-90f);
              CreateBullet(-115f);
             CreateBullet(- 140f);
-        }
-   
-       
+        }      
     }
 
     private void CreateBullet(float angleOffset = 0f)
@@ -84,10 +80,8 @@ public class SpaceAlien : MonoBehaviour
         bullet.transform.position = transform.position;
 
         Rigidbody2D rigidbody = bullet.GetComponent<Rigidbody2D>();
-        rigidbody.AddForce(Quaternion.AngleAxis(angleOffset, Vector3.forward) * transform.right * 1000.0f);
-       
+        rigidbody.AddForce(Quaternion.AngleAxis(angleOffset, Vector3.forward) * transform.right * 1000.0f);       
     }
-
 
     void CalculateMovement()
     {
@@ -126,14 +120,12 @@ public class SpaceAlien : MonoBehaviour
             if (player != null)
             {
                 player.Damage();
-
             }
             //trigger anim to set explosion
             _anim.SetTrigger("OnAlienDeath");
             _speed = 0;
             _audioSource.Play();
             Destroy(this.gameObject, 1f);
-
         }
 
         if (other.tag == "laser")
@@ -151,8 +143,6 @@ public class SpaceAlien : MonoBehaviour
 
             Destroy(GetComponent<Collider2D>());   //this will cause double explosions even after death
             Destroy(this.gameObject, 1f);
-
-
 
             // Player player = GameObject.Find("Player").GetComponent<Player>();
             //this was mad global at the top so it is not needed every where

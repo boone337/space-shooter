@@ -53,27 +53,8 @@ public class Movement2 : MonoBehaviour
 
             case 1:
 
-
                 break;
 
-
-
-
-
         }
-
-
-
-
-
-
-
-
     }  
-
-
-    
-
-
-
 }

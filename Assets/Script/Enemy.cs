@@ -79,21 +79,13 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("Animator is Null");
         }
-
-
-
     }
 
     // Update is called once per frame
     void Update()
     {
-       // EvadePlayer();   I am not using this at the moment 
-
-        
-
+       // EvadePlayer();   I am not using this at the moment
         CalculateMovement();
-
-
     }
     public void RayCast()  //was using raycast in update and was getting over 1000 debug player hit laser codes.  
     {
@@ -108,7 +100,6 @@ public class Enemy : MonoBehaviour
         {            
            Debug.DrawRay(transform.position, -Vector3.up * 10, Color.red, 0);
 
-
             if (Time.time > _canFire)
             {
                 _fireRate = Random.Range(1f, 1.5f);
@@ -117,22 +108,17 @@ public class Enemy : MonoBehaviour
                 Fire();
             } 
 
-            Debug.Log("Hit Player");
+            Debug.Log("Ray Cast Hit Player");
 
-            StartCoroutine(ResetFireRate());
-                                 
-        }        
-      
-    }
-  
+            StartCoroutine(ResetFireRate());                                
+        }            
+    } 
     private IEnumerator ResetFireRate()
     {
         yield return new WaitForSeconds(0f); 
        // canFire= true;  
-
     }
-
-    private void EvadePlayer()
+    public void EvadePlayer()
     {
         if (_player != null)
         {
@@ -140,24 +126,21 @@ public class Enemy : MonoBehaviour
 
             float evasionSpeed = Mathf.Pow(5, -(delta * delta)) * 10;
 
-
             if (delta >= 0)
             {
                 evasionSpeed = -Mathf.Pow(5, -(delta * delta)) * 10;
             }
 
             transform.Translate(new Vector3(evasionSpeed, -4, 0) * Time.deltaTime);
-
         }
-
     }
 
-    public void Fire()
+    private void Fire()
     {         
        GameObject enemyLaser = Instantiate(_laserPrefab, transform.position + new Vector3(0, -2.9f, 0), transform.rotation);
     }
 
-    public void CalculateMovement()
+    private void CalculateMovement()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
@@ -172,8 +155,7 @@ public class Enemy : MonoBehaviour
 
         }
     }
-
-    public void ShieldActive()
+    private void ShieldActive()
     {
         if (_shieldActive == true)
         {
@@ -184,18 +166,15 @@ public class Enemy : MonoBehaviour
                 Shield();
                 _shieldActive = false;
             }
-
         }
 
     }
     void Shield()
     {
         _shield.SetActive(false);
-
     }
 
     void OnTriggerEnter2D(Collider2D other)
-
     {
         if (other.tag == "laser" && _shieldActive == true)
         {
@@ -204,9 +183,7 @@ public class Enemy : MonoBehaviour
             Destroy(other.gameObject);
             // _shieldActive = false;
             return;
-
         }
-
 
         if (other.tag == "Player" && _shieldActive == true)
         {
@@ -247,10 +224,7 @@ public class Enemy : MonoBehaviour
         if (other.tag == "laser" && _shieldActive == false)
         {
 
-
             Debug.Log("laser hit enemy");
-
-          
 
             if (_anim != null)
 
@@ -336,9 +310,6 @@ public class Enemy : MonoBehaviour
         }
 
     }
-
-   
-
 }
 
 

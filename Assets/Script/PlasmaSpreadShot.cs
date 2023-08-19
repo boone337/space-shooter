@@ -24,16 +24,11 @@ public class PlasmaSpreadShot : MonoBehaviour
        
 
     }
-
-   
-
-
     void MoveDown()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
         // float angleBetweenShots = spreadAngle / (numShots - 1);
         //uaternion shotRotation = Quaternion.Euler(0f, -spreadAngle / 2f * angleBetweenShots, 0f);
-
 
         if (transform.position.y < -14.0f)
         {
@@ -41,13 +36,8 @@ public class PlasmaSpreadShot : MonoBehaviour
             {
                 Destroy(transform.parent.gameObject);
 
-
             }
-
                 Destroy(gameObject);
-
-
         }
-
     }
 }

@@ -29,8 +29,6 @@ public class RandomLoot : MonoBehaviour
         //ex2 randomNumber = 92..92<=60? no so 92-60 = 32..32<=30?  no so 32-30 =2
         // 2<+10? yes thats your weapon.  
 
-       
-
       /*  foreach(var weight in table)
         {
             if (RandomNumber <= weight)
@@ -46,9 +44,6 @@ public class RandomLoot : MonoBehaviour
         }
          */
         //now we compare the random number <= to current weight?
-
-       
-
 
     }
 

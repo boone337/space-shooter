@@ -31,8 +31,6 @@ public class Enemy2 : MonoBehaviour
     //create handle to animator component
     private Animator _anim;
 
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -45,16 +43,13 @@ public class Enemy2 : MonoBehaviour
         if (_player == null)
         {
             Debug.LogError("The Player is Null.");
-
         }
         _anim = GetComponent<Animator>();
 
         if (_anim == null)
         {
             Debug.LogError("Animator is Null");
-        }
-
-       
+        }      
     }
 
     // Update is called once per frame
@@ -76,8 +71,6 @@ public class Enemy2 : MonoBehaviour
 
             //  }
         }
-
-
     }
 
 
@@ -94,7 +87,6 @@ public class Enemy2 : MonoBehaviour
             transform.position = new Vector3(Random.Range(-8f, 8f), 7, 0);
 
         }
-
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -120,7 +112,6 @@ public class Enemy2 : MonoBehaviour
             _speed = 0;
             _audioSource.Play();
             Destroy(this.gameObject, 1f);
-
         }
 
         if (other.tag == "laser")
@@ -143,9 +134,7 @@ public class Enemy2 : MonoBehaviour
             _speed = 0;
             _audioSource.Play();
 
-            Destroy(GetComponent<Collider2D>());   //this will cause double explosions even after death
-           
-
+            Destroy(GetComponent<Collider2D>());   //this will cause double explosions even after death          
         }
 
         else if (other.tag == "Bomb")
@@ -158,7 +147,7 @@ public class Enemy2 : MonoBehaviour
         }
     }
 
-    public void DestroySelf()
+    private void DestroySelf()
     {
         StartCoroutine(DestroySelfCoroutine());
     }
@@ -189,8 +178,5 @@ public class Enemy2 : MonoBehaviour
         _audioSource.Play();
 
         Debug.Log("Enemy destroyed by bomb");
-
-
     }
-
 }

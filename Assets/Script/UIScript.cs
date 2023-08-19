@@ -63,7 +63,7 @@ public class UIScript : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         _bossLifeBar.enabled = false;  //This makes the image disappear
 
@@ -91,7 +91,7 @@ public class UIScript : MonoBehaviour
 
     }
 
-    public void  UpdateChangeWaveCount(int waveNumber)
+     public void  UpdateChangeWaveCount(int waveNumber)
     {
         _waveStartText.text = "WAVE " + waveNumber;
         _waveStartText.enabled = true;  
@@ -140,7 +140,7 @@ public class UIScript : MonoBehaviour
 
     
 
-    public void UpdateBossDamage(float damage )
+      public void UpdateBossDamage(float damage )
     {
         
 
@@ -155,37 +155,29 @@ public class UIScript : MonoBehaviour
 
     }
 
-    public void UpdateThrusterLevel(float value)
+     public void UpdateThrusterLevel(float value)
     {
         float amount = value / _thrusteramount;
         _thrusterBar.fillAmount = amount; 
         
     }
-
-    public void UpdateAmmoDisplay(int Ammo )
-    {
-            
+      public void UpdateAmmoDisplay(int Ammo )
+    {         
         _ammoText.text = " CURRENT/MAX: " + $"{Ammo} / {_maxAmmo}";
-        
-
+   
      /* if (Ammo >= 15)
 
         {
             _ammoText.text = " MAX AMMO " + Ammo;
-        }*/
-
-      
+        }*/      
        if (Ammo ==0 )
         {         
-
-           StartCoroutine(ammoflickerRoutine());
-           
+           StartCoroutine(ammoflickerRoutine());          
         }
  
        else
         {
             Ammobool = false;
-
             _ammoText.text = " CURRENT/MAX: " + $"{Ammo} / {_maxAmmo}";
         }
     }
@@ -207,19 +199,17 @@ public class UIScript : MonoBehaviour
 
             yield return new WaitForSeconds(0.5f);
 
-        }
-         
-        
+        }             
     }
 
-    public void UpdateScore(int playerScore)
+      public void UpdateScore(int playerScore)
 
     {
         _scoreText.text = "Score" + playerScore;
         
     }
 
-    public void UpdateBomb(int currentBomb)
+     public void UpdateBomb(int currentBomb)
     {
         _bombImg.sprite = _bombSprites[currentBomb];
     }
@@ -237,15 +227,13 @@ public class UIScript : MonoBehaviour
           //  StartCoroutine(GameFlickerRoutine());
         }
     }
- 
-    void GameOverSequence()
+  public void GameOverSequence()
     {
         _gameManager.GameOver();
         _gameOverText.gameObject.SetActive(true);
         _restartText.gameObject.SetActive(true);    
         StartCoroutine(GameFlickerRoutine());
     }
-
     IEnumerator GameFlickerRoutine()
     {
         while (true)
@@ -256,6 +244,4 @@ public class UIScript : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
     }
-
-
 }

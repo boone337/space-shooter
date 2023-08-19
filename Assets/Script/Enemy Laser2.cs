@@ -17,7 +17,6 @@ public class EnemyLaser2 : MonoBehaviour
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
-
     }
 
     // Update is called once per frame
@@ -26,13 +25,11 @@ public class EnemyLaser2 : MonoBehaviour
         if (isEnemyLaser == false)
         {
             MoveUp();
-
         }
 
         else
         {
             MoveDown();
-
         }
 
         if (transform.position.y < -12f)
@@ -41,11 +38,8 @@ public class EnemyLaser2 : MonoBehaviour
             {
                 Destroy(transform.parent.gameObject);
             }
-
             Destroy(this.gameObject);
-
         }
-
     }
 
     void MoveUp()
@@ -59,16 +53,10 @@ public class EnemyLaser2 : MonoBehaviour
         {
             if (transform.parent != null)
             {
-
                 Destroy(transform.parent.gameObject);
             }
-
-
             Destroy(this.gameObject);
-
         }
-
-
     }
 
     void MoveDown()
@@ -79,13 +67,9 @@ public class EnemyLaser2 : MonoBehaviour
         {
             if (transform.parent != null)
             {
-
                 Destroy(transform.parent.gameObject);
             }
-
-
             Destroy(this.gameObject);
-
         }
 
     }
@@ -94,18 +78,13 @@ public class EnemyLaser2 : MonoBehaviour
 
         if (other.tag == "Player" && isEnemyLaser == true)
         {
-
             if (_player != null)
             {
                 Destroy(this.gameObject);
             }
-
         }
 
-
-
     }
-
 }
 
 

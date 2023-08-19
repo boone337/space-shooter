@@ -3,27 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ExplodeScript : MonoBehaviour
-
-
-
-
 {
 
   //  [SerializeField]
     //private Asteroid _asteroid;
 
-    
-
-
-
     // Start is called before the first frame update
     void Start()
     {
         //_asteroid = GameObject.Find("Asteroid").GetComponent < Asteroid>();
-
-
         Destroy(this.gameObject, 8f);
-
     }
 
     // Update is called once per frame

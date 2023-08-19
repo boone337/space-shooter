@@ -33,8 +33,6 @@ public class CameraShake : MonoBehaviour
 
    // private Player _player;
 
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -48,11 +46,17 @@ public class CameraShake : MonoBehaviour
     void Update()
     {
        
-
         
     }
    
-   
+
+
+
+
+
+
+
+
 
     public void ShakeCamera()
     {
