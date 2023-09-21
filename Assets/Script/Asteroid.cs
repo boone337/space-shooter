@@ -123,8 +123,6 @@ public class Asteroid : MonoBehaviour
 
                 _audioSource.Play();
             }
-
-            Debug.Log("Laser hit Asteroid");
                       
             _speed = 0;
 

@@ -5942,7 +5942,8 @@ MonoBehaviour:
     type: 3}
   _bossPrefab: {fileID: 5256959557674924547, guid: da216ef3580994240a6e687da26af8b7,
     type: 3}
-  _waveNumber: 0
+  _waveNumber: 1
+  _startWave: 1
   _enemyContainer: {fileID: 2086121753}
   _asteroidPrefab: {fileID: 3964002801389917318, guid: 48b06f0c984052948bb3ef0a998b3e4d,
     type: 3}
@@ -5951,7 +5952,7 @@ MonoBehaviour:
   - {fileID: 1838669251868242873, guid: 09dd5e05815242b48966b98b82748115, type: 3}
   - {fileID: 1222787619736676198, guid: 688f2ff268ec82b4f83f3b87657701b5, type: 3}
   - {fileID: 8450674751440997681, guid: 54d2280459308074a84d808f5f9b6f81, type: 3}
-  - {fileID: 2970819948940621451, guid: ea085eadb15260546afc842e6423bcd9, type: 3}
+  - {fileID: 3362042959058172885, guid: cc5acd09c80b7f8478aaabc534d514e1, type: 3}
   - {fileID: 3312960189804074966, guid: 1b12333194c56b5409f99344294f5800, type: 3}
   total: 0
   RandomNumber: 0
@@ -7095,12 +7096,12 @@ PrefabInstance:
     - target: {fileID: 6148321917836455848, guid: 9d68e4341b06e59468dc6ef519c60673,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.81
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6148321917836455848, guid: 9d68e4341b06e59468dc6ef519c60673,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.49
+      value: -4.7
       objectReference: {fileID: 0}
     - target: {fileID: 6148321917836455848, guid: 9d68e4341b06e59468dc6ef519c60673,
         type: 3}
@@ -7142,6 +7143,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6148321917836455849, guid: 9d68e4341b06e59468dc6ef519c60673,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 2.6655326
+      objectReference: {fileID: 0}
+    - target: {fileID: 6148321917836455849, guid: 9d68e4341b06e59468dc6ef519c60673,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 4.20297
+      objectReference: {fileID: 0}
+    - target: {fileID: 6148321917836455849, guid: 9d68e4341b06e59468dc6ef519c60673,
+        type: 3}
+      propertyPath: m_Offset.x
+      value: -0.12795568
+      objectReference: {fileID: 0}
+    - target: {fileID: 6148321917836455849, guid: 9d68e4341b06e59468dc6ef519c60673,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: -0.458515
+      objectReference: {fileID: 0}
     - target: {fileID: 6148321917836455851, guid: 9d68e4341b06e59468dc6ef519c60673,
         type: 3}
       propertyPath: m_Volume
@@ -7154,8 +7175,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6148321917836455854, guid: 9d68e4341b06e59468dc6ef519c60673,
         type: 3}
+      propertyPath: _ammo
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6148321917836455854, guid: 9d68e4341b06e59468dc6ef519c60673,
+        type: 3}
       propertyPath: _speed
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6148321917836455854, guid: 9d68e4341b06e59468dc6ef519c60673,
+        type: 3}
+      propertyPath: _ammoSupply
+      value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d68e4341b06e59468dc6ef519c60673, type: 3}

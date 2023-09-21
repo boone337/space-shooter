@@ -96,10 +96,10 @@ public class Player : MonoBehaviour
                                       //question is: is it only for audio source you do this with?
 
     [SerializeField]
-    private int _ammoSupply = 15;                              
+    private int _ammoSupply = 25;                              
 
     [SerializeField]
-    private int _ammo = 15;
+    private int _ammo = 25;
 
     [SerializeField]
     private GameObject _nuke_prefab;
@@ -130,6 +130,9 @@ public class Player : MonoBehaviour
     private bool _homingActive = false;
 
     private Enemy _enemy;
+
+    [SerializeField]
+    private int _enemyDestroy = 0;
 
     // Start is called before the first frame update
 
@@ -339,10 +342,10 @@ public class Player : MonoBehaviour
     {
         _ammo = _ammo + _ammoSupply;
 
-        if (_ammo > 0)
+        if (_ammo > 25)
 
         {
-            _ammo = 15;
+            _ammo = 25;
             _uIScript.UpdateAmmoDisplay(_ammo);
             Debug.Log("Max Ammo ! ");
             _laser = true;
@@ -496,7 +499,42 @@ public class Player : MonoBehaviour
     {
         _score += points;
         _uIScript.UpdateScore(_score);
+    }
 
+    public void EnemyDestroyCount (int count)
+    {
+        _enemyDestroy += count;
+
+        if(_enemyDestroy == 5)
+        {
+
+            _spawnManager.WaveNumber();
+
+            
+        }
+
+        else if (_enemyDestroy == 10)
+        {
+            _spawnManager.WaveNumber();
+        
+        }
+
+        else if (_enemyDestroy == 15)
+        {
+            _spawnManager.WaveNumber();
+        }
+
+        else if (_enemyDestroy == 20)
+        {
+            _spawnManager.WaveNumber();
+        }
+
+        else if (_enemyDestroy ==25)
+
+        {
+            _spawnManager.WaveNumber();
+        }
+        
     }
     //add 10 to score
     //communicate with ui and update score

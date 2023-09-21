@@ -46,7 +46,7 @@ public class UIScript : MonoBehaviour
     [SerializeField]
     private float _thrusteramount = 100f;
 
-    private int _maxAmmo = 15;
+    private int _maxAmmo = 25;
 
     [SerializeField]
     private TMP_Text _waveStartText; // using text mesh pro
@@ -69,7 +69,7 @@ public class UIScript : MonoBehaviour
 
         _player = GameObject.Find("Player").GetComponent<Player>();   
         
-        _ammoText.text = "AMMO COUNT:" + 15;  
+        _ammoText.text = "AMMO COUNT:" + 25;  
         
         // 15 will show up after play is initiated
 
@@ -107,8 +107,7 @@ public class UIScript : MonoBehaviour
 
     }
 
-   
-
+ 
     public void UpdateBossText()
     {
         _waveStartText.text = "BOSS";
@@ -138,12 +137,9 @@ public class UIScript : MonoBehaviour
 
     }
 
-    
-
       public void UpdateBossDamage(float damage )
     {
         
-
         _bosshealth -= 1;
 
         _bossLifeBar.fillAmount = _bosshealth / 100f;

@@ -120,6 +120,8 @@ public class Enemy2 : MonoBehaviour
             if (_player != null)
             {
                 _player.AddScore(10);
+
+                _player.EnemyDestroyCount(1);
             }
             //trigger anim 
             if (_anim != null)

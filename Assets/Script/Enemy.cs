@@ -223,6 +223,7 @@ public class Enemy : MonoBehaviour
 
         if (other.tag == "laser" && _shieldActive == false)
         {
+            
 
             Debug.Log("laser hit enemy");
 
@@ -238,6 +239,8 @@ public class Enemy : MonoBehaviour
             if (_player != null)
             {
                 _player.AddScore(10);
+
+                _player.EnemyDestroyCount(1);
             }
 
             Destroy(this.gameObject, 1f);
